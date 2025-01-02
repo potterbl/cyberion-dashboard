@@ -1,0 +1,53 @@
+.error-modal{
+    width: fit-content;
+    height: fit-content;
+    padding: 12px 18px;
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    border: 1px solid rgba(52, 58, 64, 0.15);
+    font-size: 19px;
+    animation: showAndHide 10s forwards;
+}
+.error-modal::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background-color: red;
+    z-index: 2;
+}
+.error-modal::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: rgba(0, 0, 255, 0.4);
+    animation: timer 10s forwards;
+}
+@keyframes timer {
+    5%{
+        width: 100%;
+    }
+    85%{
+        width: 0;
+    }
+}
+@keyframes showAndHide {
+    0% {
+        right: calc(-100% + 12px);
+    }
+    5%{
+        right: 12px;
+    }
+    85%{
+        right: 12px;
+    }
+    100%{
+        right: calc(-100% + 12px);
+    }
+}

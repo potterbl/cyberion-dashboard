@@ -1,0 +1,9 @@
+.login{
+    width: 360px;
+    border: 1px solid rgba(52, 58, 64, 0.5);
+    border-radius: 8px;
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 100%;
+    row-gap: 24px;
+}
