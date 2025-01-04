@@ -57,6 +57,7 @@ const NewsEdit = () => {
     }, [title])
 
     function getYouTubeVideoId(url) {
+        // eslint-disable-next-line
         const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
         const match = url.match(regex);
         return match ? match[1] : ""; // Возвращаем пустую строку, если ID не найден
@@ -94,6 +95,7 @@ const NewsEdit = () => {
         }, 10000);
     }
 
+    // eslint-disable-next-line
     const debouncedSave = useCallback(
         debounce((updatedHTML) => {
             setText(updatedHTML); // Обновляем состояние с новым HTML
@@ -175,6 +177,7 @@ const NewsEdit = () => {
                                             <p>Зображення</p>
                                             <ImageUpload
                                                 onChange={(e) => setImage(e[0])}
+                                                // eslint-disable-next-line
                                                 value={(typeof image === "string" ? `https://api.cyberion.com.ua/files/${image}` : typeof image === "File" ? URL.createObjectURL(image) : null)}
                                                 max={1}
                                                 itemClassName={"news-edit_body-text_label-img"}
