@@ -1,7 +1,7 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import "../styles/newsEdit.css";
 import EditHead from "../components/editHead";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import 'react-quill/dist/quill.snow.css';
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,10 +17,7 @@ import ErrorModal from "../components/errorModal";
 import {debounce} from "lodash";
 
 const NewsEdit = () => {
-    const params = useParams();
     const router = useNavigate();
-
-    const {id} = params
 
     const [error, setError] = useState("");
     const [showError, setShowError] = useState(false);

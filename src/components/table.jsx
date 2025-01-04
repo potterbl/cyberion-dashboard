@@ -1,56 +1,17 @@
-import React, { useRef, useState, useEffect, useMemo } from "react";
+import React, { useState, useMemo } from "react";
 import "../styles/table.css";
 import {Link} from "react-router-dom";
 
-const Table = ({ head, body, pageCount, editBaseLink, createBaseLink }) => {
+import trashIcon from "../images/trash.svg"
+
+const Table = ({ head, body, pageCount, editBaseLink, createBaseLink, editable, deletable, deleteCallback }) => {
     const [pageNumber, setPageNumber] = useState(1);
-    const [columnWidths, setColumnWidths] = useState([]);
-    const tableBodyRef = useRef(null);
-    const [rowHeight, setRowHeight] = useState(0);
 
     const pagesCount = Math.ceil(body?.length / pageCount);
 
     const slicedBody = useMemo(() => {
         return body.slice((pageNumber - 1) * pageCount, pageNumber * pageCount);
     }, [body, pageNumber, pageCount]);
-
-    // Инициализация ширины столбцов
-    useEffect(() => {
-        if (head?.length) {
-            const initialWidth = 100 / head.length; // Равномерное распределение
-            setColumnWidths(new Array(head.length).fill(initialWidth));
-        }
-    }, [head]);
-
-    // Расчет высоты строк
-    useEffect(() => {
-        if (tableBodyRef?.current) {
-            const height = tableBodyRef.current?.clientHeight;
-            setRowHeight((height - (pageCount * 4)) / (pageCount || 10));
-        }
-    }, [pageCount, tableBodyRef]);
-
-    const handleMouseDown = (index, event) => {
-        const startX = event.clientX;
-        const startWidth = columnWidths[index];
-
-        const onMouseMove = (e) => {
-            const deltaX = e.clientX - startX;
-            setColumnWidths((prevWidths) => {
-                const newWidths = [...prevWidths];
-                newWidths[index] = Math.max(10, startWidth + deltaX); // Минимальная ширина
-                return newWidths;
-            });
-        };
-
-        const onMouseUp = () => {
-            document.removeEventListener("mousemove", onMouseMove);
-            document.removeEventListener("mouseup", onMouseUp);
-        };
-
-        document.addEventListener("mousemove", onMouseMove);
-        document.addEventListener("mouseup", onMouseUp);
-    };
 
     return (
         <div className="table">
@@ -64,29 +25,61 @@ const Table = ({ head, body, pageCount, editBaseLink, createBaseLink }) => {
                     <div
                         key={index}
                         className="table-head_item"
-                        style={{ width: `${columnWidths[index]}%` }}
                     >
                         <p>{item}</p>
-                        <span
-                            className="table-head_resize"
-                            onMouseDown={(e) => handleMouseDown(index, e)}
-                        />
                     </div>
                 ))}
+                {
+                    deletable && (
+                        <div
+                            className="table-head_item"
+                        >
+                            <p>Видалити</p>
+                        </div>
+                    )
+                }
             </div>
-            <div className="table-body" ref={tableBodyRef}>
-                {slicedBody?.map((row, rowIndex) => (
-                    <Link to={editBaseLink + row.id} key={rowIndex} className="table-row" style={{ height: rowHeight }}>
+            <div className="table-body">
+                {slicedBody?.map((row, rowIndex) => editable ? (
+                    <Link to={editBaseLink + row.id} key={rowIndex} className={`table-row ${rowIndex % 2 === 0 ? 'table-row_dark' : ''}`}>
                         {Object.keys(row)?.map((cell, cellIndex) => cell !== "id" && (
                             <div
                                 key={cellIndex}
                                 className="table-cell"
-                                style={{ width: `${columnWidths[cellIndex]}%` }}
                                 dangerouslySetInnerHTML={{ __html: row[cell] }}
                             >
                             </div>
                         ))}
+                        {
+                            deletable && (
+                                <div
+                                    className="table-cell"
+                                >
+                                    <img src={trashIcon} alt="trash" onClick={() => deleteCallback(row.id)} className="table-cell_delete"/>
+                                </div>
+                            )
+                        }
                     </Link>
+                ) : (
+                    <div key={rowIndex} className={`table-row ${rowIndex % 2 === 0 ? 'table-row_dark' : ''}`}>
+                        {Object.keys(row)?.map((cell, cellIndex) => cell !== "id" && (
+                            <div
+                                key={cellIndex}
+                                className="table-cell"
+                                dangerouslySetInnerHTML={{ __html: row[cell] }}
+                            >
+                            </div>
+                        ))}
+                        {
+                            deletable && (
+                                <div
+                                    className="table-cell"
+                                >
+                                    <img src={trashIcon} alt="trash" onClick={() => deleteCallback(row.id)} className="table-cell_delete"/>
+                                </div>
+                            )
+                        }
+                    </div>
                 ))}
             </div>
             <div className="table-footer">

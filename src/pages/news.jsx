@@ -31,7 +31,7 @@ const News = () => {
 
     return (
         <div className="news">
-            <Table editBaseLink={"/news/edit/"} createBaseLink={'/news/create'} pageCount={10} body={news} head={["Назва", "Текст", "Посилання на відео ютуб", "Дата"]}/>
+            <Table editable={true} editBaseLink={"/news/edit/"} createBaseLink={'/news/create'} pageCount={10} body={news} head={["Назва", "Текст", "Посилання на відео ютуб", "Дата"]}/>
         </div>
     );
 };

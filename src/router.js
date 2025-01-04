@@ -8,6 +8,7 @@ import Login from "./pages/login";
 import NewsEdit from "./pages/newsEdit";
 import NewsCreate from "./pages/newsCreate";
 import Users from "./pages/users";
+import UsersCreate from "./pages/usersCreate";
 
 export const router = createBrowserRouter([
     {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
                     {
                         path: "/news/create",
                         element: <NewsCreate/>
+                    },
+                    {
+                        path: "/users/create",
+                        element: <UsersCreate/>
                     },
                 ]
             },

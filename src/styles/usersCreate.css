@@ -1,0 +1,46 @@
+.users-create{
+    height: 100%;
+    overflow-y: auto;
+    display: grid;
+    grid-template-rows: 48px 1fr 52px;
+    row-gap: 24px;
+}
+.users-create_body{
+    height: 100%;
+    background-color: #DEE2E6;
+    padding: 16px;
+    display: grid;
+    row-gap: 28px;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, min-content);
+}
+.users-create_footer{
+    justify-self: flex-end;
+    display: flex;
+    align-items: center;
+    column-gap: 14px;
+    height: 100%;
+}
+.users-create_footer-btn{
+    height: 100%;
+    border-radius: 6px;
+    padding: 0 32px;
+    border: 1px solid #343A40;
+    font-size: 16px;
+}
+.users-create_body-label{
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 14px;
+}
+.users-create_body-label_input{
+    width: 380px;
+    height: 48px;
+    padding: 0 18px;
+    font-size: 16px;
+    outline: none;
+}
+.users-create_body-label_input-select{
+    width: 380px;
+    height: 48px;
+}
