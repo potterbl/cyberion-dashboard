@@ -1,8 +1,23 @@
 .table{
     display: grid;
-    grid-template-rows: 48px 1fr 48px;
+    grid-template-rows: 48px 48px 1fr 48px;
     height: 100%;
     row-gap: 12px;
+}
+.table-add{
+    justify-self: flex-end;
+    align-items: center;
+    height: 100%;
+}
+.table-add_btn{
+    padding: 0 28px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    display: grid;
+    place-items: center;
+    height: 100%;
+    border: 1px solid #b0b0b0;
 }
 .table-head{
     display: flex;
@@ -45,13 +60,20 @@
     }
 }
 .table-body{
-    display: grid;
+    display: flex;
+    flex-direction: column;
     row-gap: 4px;
 }
 .table-row{
     display: flex;
     width: 100%;
     overflow: hidden;
+    transition: all .3s ease;
+}
+@media (hover: hover) {
+    .table-row:hover{
+        background-color: rgba(222, 226, 230, 0.5);
+    }
 }
 .table-cell{
     width: 100%;

@@ -36,26 +36,6 @@ const NewsEdit = () => {
         "Медіа"
     ]
 
-    const fetchNew = async () => {
-        await axios
-            .get(`https://api.cyberion.com.ua/news/${id}`)
-            .then((res) => {
-                setTitle(res.data.title);
-                setText(res.data.text)
-                setText(res.data.text)
-                setDate(res.data.date)
-                setYoutubeLink(res.data.youtubeLink)
-                setImage(res.data.image)
-            })
-            .catch((err) => console.log(err));
-    }
-
-    useEffect(() => {
-        if(title) return
-        fetchNew();
-        // eslint-disable-next-line
-    }, [title])
-
     function getYouTubeVideoId(url) {
         // eslint-disable-next-line
         const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
@@ -65,6 +45,7 @@ const NewsEdit = () => {
 
     const handleSave = async () => {
         const formdata = new FormData();
+        console.log(image)
         formdata.append("image", image);
         formdata.append("youtubeLink", youtubeLink);
         formdata.append("date", date.toISOString());
@@ -72,7 +53,7 @@ const NewsEdit = () => {
         formdata.append("text", text);
         formdata.append("isYoutube", youtubeLink !== "");
         await axios
-            .put(`https://api.cyberion.com.ua/news/${id}`, formdata, {
+            .post(`https://api.cyberion.com.ua/news`, formdata, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'authorization': localStorage.getItem('token')
@@ -81,21 +62,6 @@ const NewsEdit = () => {
             .then(res => {
                 router('/news')
             })
-            .catch(err => {
-                setErrorState(err.message);
-                console.log(err.message)
-            })
-    }
-
-    const handleDelete = async () => {
-        await axios
-            .delete(`https://api.cyberion.com.ua/news/${id}`, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'authorization': localStorage.getItem('token')
-                }
-            })
-            .then(res => router('/news'))
             .catch(err => {
                 setErrorState(err.message);
                 console.log(err.message)
@@ -206,7 +172,7 @@ const NewsEdit = () => {
                                         <div className="news-edit_body-text_label">
                                             <p>Зображення</p>
                                             <ImageUpload
-                                                onChange={(e) => setImage(e[0])}
+                                                onChange={(e) => setImage(e[0]?.file)}
                                                 // eslint-disable-next-line
                                                 value={(typeof image === "string" ? `https://api.cyberion.com.ua/files/${image}` : typeof image === "File" ? URL.createObjectURL(image) : null)}
                                                 max={1}
@@ -221,9 +187,6 @@ const NewsEdit = () => {
                     }
                 </div>
                 <div className="news-edit_footer">
-                    <button className="news-edit_footer-btn" onClick={handleDelete}>
-                        Видалити
-                    </button>
                     <button className="news-edit_footer-btn" onClick={handleSave}>
                         Зберегти
                     </button>

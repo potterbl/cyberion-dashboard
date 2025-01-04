@@ -60,6 +60,9 @@
 }
 .news-edit_footer{
     justify-self: flex-end;
+    display: flex;
+    align-items: center;
+    column-gap: 14px;
     height: 100%;
 }
 .news-edit_footer-btn{

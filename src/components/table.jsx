@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useMemo } from "react";
 import "../styles/table.css";
 import {Link} from "react-router-dom";
 
-const Table = ({ head, body, pageCount, editBaseLink }) => {
+const Table = ({ head, body, pageCount, editBaseLink, createBaseLink }) => {
     const [pageNumber, setPageNumber] = useState(1);
     const [columnWidths, setColumnWidths] = useState([]);
     const tableBodyRef = useRef(null);
@@ -54,6 +54,11 @@ const Table = ({ head, body, pageCount, editBaseLink }) => {
 
     return (
         <div className="table">
+            <div className="table-add">
+                <Link to={createBaseLink} className="table-add_btn">
+                    Додати
+                </Link>
+            </div>
             <div className="table-head">
                 {head?.map((item, index) => (
                     <div
@@ -77,8 +82,8 @@ const Table = ({ head, body, pageCount, editBaseLink }) => {
                                 key={cellIndex}
                                 className="table-cell"
                                 style={{ width: `${columnWidths[cellIndex]}%` }}
+                                dangerouslySetInnerHTML={{ __html: row[cell] }}
                             >
-                                <p>{row[cell]}</p>
                             </div>
                         ))}
                     </Link>
