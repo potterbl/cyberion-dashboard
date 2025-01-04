@@ -10,9 +10,53 @@
     background-color: #DEE2E6;
     padding: 16px;
 }
+.news-edit_body-text, .news-edit_body-media{
+    display: grid;
+    row-gap: 24px;
+}
 .news-edit_body-text_label{
     display: grid;
+    justify-content: flex-start;
     row-gap: 14px;
+    width: 100%;
+    grid-template-columns: 1fr;
+}
+.news-edit_body-text_label-left{
+    display: grid;
+    row-gap: 24px;
+}
+.news-edit_body-media_input{
+    height: 48px;
+    padding: 0 16px;
+    outline: none;
+    border-radius: 4px;
+    width: 360px;
+    border: 1px solid #b0b0b0;
+    font-size: 18px;
+}
+.news-edit_body-text_label-input{
+    height: 36px;
+    padding: 0 16px;
+    outline: none;
+    border-radius: 4px;
+    width: 100%;
+    border: 1px solid #b0b0b0;
+    font-size: 14px;
+    background-color: transparent;
+}
+.news-edit_body-text_label_yt{
+    width: 360px;
+    height: unset !important;
+    aspect-ratio: 16/9;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+.news-edit_body-text_label-img{
+    width: 360px !important;
+    aspect-ratio: 1 !important;
+    height: unset !important;
 }
 .news-edit_footer{
     justify-self: flex-end;
@@ -24,4 +68,40 @@
     padding: 0 32px;
     border: 1px solid #343A40;
     font-size: 16px;
+}
+.ql-picker-item[data-value="1"] {
+     display: none !important;
+}
+.ql-picker-item[data-value="2"]::before {
+    content: "Заголовок" !important;
+    font-size: 40px!important;
+}
+.ql-picker-item[data-value="3"]::before {
+    content: "Великий текст" !important;
+    font-size: 30px!important;
+}
+.ql-picker-item:not([data-value])::before {
+    content: "Звичайний текст" !important;
+    font-size: 18px!important;
+}
+.ql-picker-label[data-value="2"]::before {
+    content: "Заголовок" !important;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 85%;
+}
+.ql-picker-label[data-value="3"]::before {
+    content: "Великий текст" !important;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 85%;
+}
+.ql-picker-label:not([data-value])::before {
+    content: "Звичайний текст" !important;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 85%;
+}
+.react-datepicker-wrapper_custom{
+    width: fit-content;
 }

@@ -14,7 +14,7 @@
     color: black;
 }
 .heading{
-    font-size: 24px;
+    font-size: 24px !important;
 }
 .white{
     color: white;
@@ -25,4 +25,28 @@ a{
 button{
     border: none;
     background-color: transparent;
+}
+.title {
+    font-size: 80px!important;
+    font-weight: bold;
+    line-height: 100%;
+}
+.heading-smaller {
+    font-size: 40px!important;
+    font-style: normal;
+    font-weight: 700;
+}
+.body-text-bigger {
+    font-size: 30px!important;
+    line-height: 100%;
+}
+.body-text-small-bigger {
+    font-size: 24px!important;
+}
+.body-text {
+    font-size: 18px!important;
+    line-height: 120%;
+}
+.thin {
+    font-weight: normal;
 }
