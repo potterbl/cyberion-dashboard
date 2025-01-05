@@ -19,7 +19,7 @@ const Login = () => {
 
     const login = async () => {
         await axios.post("https://api.cyberion.com.ua/users/login",
-            {email, password}
+            {mail: email, password}
         )
             .then(res => {
                 if(res.data.status === 401){
