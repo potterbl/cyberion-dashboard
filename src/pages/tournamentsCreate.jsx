@@ -1,8 +1,6 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import "../styles/usersCreate.css";
 import EditHead from "../components/editHead";
-import axios from "axios";
-import Select from "react-select";
 import {useNavigate} from "react-router-dom";
 import ErrorModal from "../components/errorModal";
 import api from "../api";

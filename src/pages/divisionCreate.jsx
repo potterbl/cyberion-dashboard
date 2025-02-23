@@ -7,7 +7,7 @@ import api from "../api";
 import {ImageUpload} from "@fourcels/react-image-upload";
 import DatePicker from "react-datepicker";
 import Select from "react-select";
-import {ToggleSlider, useToggleSlider} from "react-toggle-slider";
+import {useToggleSlider} from "react-toggle-slider";
 
 const DivisionCreate = () => {
     const navigate = useNavigate();

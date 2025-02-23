@@ -1,15 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "../styles/usersCreate.css";
 import EditHead from "../components/editHead";
-import axios from "axios";
-import Select from "react-select";
 import {useNavigate, useParams} from "react-router-dom";
 import ErrorModal from "../components/errorModal";
 import api from "../api";
 import {ImageUpload} from "@fourcels/react-image-upload";
 import DatePicker from "react-datepicker";
-import {ToggleSlider, useToggleSlider} from "react-toggle-slider";
-import {debounce} from "lodash";
+import {ToggleSlider} from "react-toggle-slider";
 
 const TournamentsEdit = () => {
     const navigate = useNavigate();

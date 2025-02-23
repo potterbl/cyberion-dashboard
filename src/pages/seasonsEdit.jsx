@@ -5,7 +5,6 @@ import {useNavigate, useParams} from "react-router-dom";
 import ErrorModal from "../components/errorModal";
 import api from "../api";
 import {ImageUpload} from "@fourcels/react-image-upload";
-import axios from "axios";
 
 const SeasonsEdit = () => {
     const inputRefs = useRef({});

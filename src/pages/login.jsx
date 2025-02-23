@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import "../styles/login.css"
 import AuthInput from "../components/authInput";
 import AuthButton from "../components/authButton";
-import axios from "axios";
 import {useDispatch} from "react-redux";
 import {setUser} from "../store/slices/user.slice";
 import ErrorModal from "../components/errorModal";
