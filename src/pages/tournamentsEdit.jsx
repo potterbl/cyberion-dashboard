@@ -40,7 +40,7 @@ const TournamentsEdit = () => {
             .then((res) => {
                 setTitle(res.data.title);
                 setImage(res.data.image)
-                setDate(res.data.date)
+                setDate(new Date(res.data.date))
                 setGame(res.data.game)
                 setPrizePull(res.data.prizePull)
                 setTeamSize(res.data.teamSize)
@@ -77,6 +77,48 @@ const TournamentsEdit = () => {
     }
 
     const handleSave = async () => {
+
+        console.log(prizesFrom)
+        console.log(typeof prizesFrom)
+        console.log(!prizesFrom)
+        console.log(prizesFrom === "")
+        if(title === "" || typeof title !== "string") {
+            setErrorState("НАЗВА НЕ МАЄ БУТИ ПУСТОЮ АБО НЕ СТРОКОЮ")
+            return
+        }
+        if(image === "" || !image) {
+            setErrorState("ЗОБРАЖЕННЯ МАЄ БУТИ ВСТАВЛЕНЕ")
+            return
+        }
+        if(game === "" || !game) {
+            setErrorState("ГРА МАЄ БУТ ВКАЗАНА")
+            return
+        }
+        if(prizePull === "" || !prizePull) {
+            setErrorState("ПРИЗОВИЙ ПУЛ МАЄ БУТИ ЗАПОВНЕНИМ")
+            return
+        }
+        if(teamSize === "" || !teamSize || typeof teamSize !== "string") {
+            setErrorState("РОЗМІР КОМАНДИ МАЄ БУТИ ЗАПОВНЕНИЙ ТЕКСТОМ")
+            return
+        }
+        if(entry === "" || !entry || typeof entry !== "string") {
+            setErrorState("ВСТУПНИЙ ВНЕСОК МАЄ БУТИ ЗАПОВНЕНИЙ ТЕКСТОМ")
+            return
+        }
+        if(format === "" || !format || typeof format !== "string") {
+            setErrorState("ФОРМАТ МАЄ БУТИ ЗАПОВНЕНИЙ ТЕКСТОМ")
+            return
+        }
+        if(prizesFrom === "" || !prizesFrom || typeof prizesFrom !== "string") {
+            setErrorState("ПРИЗИ ВІД МАЄ БУТИ ЗАПОВНЕНИЙ ТЕКСТОМ")
+            return
+        }
+        if(prize === "" || !prize || typeof Number(prize) !== "number") {
+            setErrorState("ПРИЗ МАЄ БУТИ ЗАПОВНЕНИЙ ЧИСЛОМ")
+            return
+        }
+
         const formData = new FormData();
         formData.append("title", title);
         formData.append("image", image);
