@@ -172,7 +172,7 @@ const TournamentsCreate = () => {
                                             <div className="users-create_body-label">
                                                 <p>Приз</p>
                                                 <input value={prize} onChange={(e) => setPrize(e.target.value)}
-                                                       type="text"
+                                                       type="number"
                                                        className="users-create_body-label_input"/>
                                             </div>
                                             <div className="users-create_body-label">
