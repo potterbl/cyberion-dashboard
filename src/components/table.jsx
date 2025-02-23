@@ -7,7 +7,7 @@ import trashIcon from "../images/trash.svg"
 const Table = ({ head, body, pageCount, editBaseLink, createBaseLink, editable, deletable, deleteCallback }) => {
     const [pageNumber, setPageNumber] = useState(1);
 
-    const pagesCount = Math.ceil(body?.length / pageCount);
+    const pagesCount = Math.ceil(body?.length / pageCount) || 0;
 
     const slicedBody = useMemo(() => {
         return body.slice((pageNumber - 1) * pageCount, pageNumber * pageCount);
@@ -54,6 +54,10 @@ const Table = ({ head, body, pageCount, editBaseLink, createBaseLink, editable, 
                             deletable && (
                                 <div
                                     className="table-cell"
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                    }}
                                 >
                                     <img src={trashIcon} alt="trash" onClick={() => deleteCallback(row.id)} className="table-cell_delete"/>
                                 </div>
@@ -83,7 +87,7 @@ const Table = ({ head, body, pageCount, editBaseLink, createBaseLink, editable, 
                 ))}
             </div>
             <div className="table-footer">
-                {pagesCount !== -1 &&
+                {pagesCount !== 0 &&
                     new Array(pagesCount || 10).fill(0).map((_, index) => (
                         <button
                             key={index}

@@ -34,12 +34,20 @@ const Wrapper = () => {
                                 name: "Клуби",
                             },
                             {
+                                location: "/seasons",
+                                name: "Турнірні сезони",
+                            },
+                            {
                                 location: "/tournaments",
                                 name: "Турніри",
                             },
                             {
-                                location: "/disciplines",
-                                name: "Турнірні дисципліни",
+                                location: "/separate-tournaments",
+                                name: "Окремі турніри",
+                            },
+                            {
+                                location: "/divisions",
+                                name: "Дівізіони",
                             },
                             {
                                 location: "/settings",

@@ -4,6 +4,7 @@
     height: 48px;
     grid-template-columns: 48px 1fr 48px;
     background-color: #DEE2E6;
+    position: fixed;
 }
 .edit-head_body{
     width: 100%;

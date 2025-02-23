@@ -2,6 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {setUser} from "../store/slices/user.slice";
 import axios from "axios";
+import api from "../api";
 
 const RequireAuth = ({children}) => {
     const token = localStorage.getItem("token");
@@ -15,8 +16,8 @@ const RequireAuth = ({children}) => {
     }
 
     const fetchData = async () => {
-        await axios
-            .get(`https://api.cyberion.com.ua/users/${token}`)
+        await api
+            .get(`/users/${token}`)
             .then(res => {
                 dispatch(setUser(res.data));
             })

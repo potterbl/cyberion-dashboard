@@ -9,6 +9,17 @@ import NewsEdit from "./pages/newsEdit";
 import NewsCreate from "./pages/newsCreate";
 import Users from "./pages/users";
 import UsersCreate from "./pages/usersCreate";
+import Seasons from "./pages/seasons";
+import SeasonsCreate from "./pages/seasonsCreate";
+import Tournaments from "./pages/tournaments";
+import TournamentsCreate from "./pages/tournamentsCreate";
+import SeparateTournaments from "./pages/separateTournaments";
+import SeparateTournamentsCreate from "./pages/separateTournamentsCreate";
+import Divisions from "./pages/divisions";
+import DivisionCreate from "./pages/divisionCreate";
+import SeasonsEdit from "./pages/seasonsEdit";
+import TournamentsEdit from "./pages/tournamentsEdit";
+import DivisionsEdit from "./pages/divisionEdit";
 
 export const router = createBrowserRouter([
     {
@@ -37,12 +48,20 @@ export const router = createBrowserRouter([
                         element: <News/>
                     },
                     {
-                        path: "tournaments",
-                        element: <News/>
+                        path: "seasons",
+                        element: <Seasons/>
                     },
                     {
-                        path: "disciplines",
-                        element: <News/>
+                        path: "tournaments",
+                        element: <Tournaments/>
+                    },
+                    {
+                        path: "separate-tournaments",
+                        element: <SeparateTournaments/>
+                    },
+                    {
+                        path: "divisions",
+                        element: <Divisions/>
                     },
                     {
                         path: "/news/edit/:id",
@@ -56,6 +75,35 @@ export const router = createBrowserRouter([
                         path: "/users/create",
                         element: <UsersCreate/>
                     },
+                    {
+                        path: "/seasons/create",
+                        element: <SeasonsCreate/>
+                    },
+                    {
+                        path: "/tournaments/create",
+                        element: <TournamentsCreate/>
+                    },
+                    {
+                        path: "/separate-tournaments/create",
+                        element: <SeparateTournamentsCreate/>
+                    },
+                    {
+                        path: "/divisions/create",
+                        element: <DivisionCreate/>
+                    },
+                    {
+                        path: "/seasons/edit/:id",
+                        element: <SeasonsEdit/>
+                    },
+                    {
+                        path: "/tournaments/edit/:id",
+                        element: <TournamentsEdit/>
+                    },
+                    {
+                        path: "/divisions/edit/:id",
+                        element: <DivisionsEdit/>
+                    },
+
                 ]
             },
             {

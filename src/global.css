@@ -50,3 +50,7 @@ button{
 .thin {
     font-weight: normal;
 }
+.common-wrapper{
+    height: 100%;
+    overflow: hidden;
+}

@@ -1,14 +1,22 @@
 .news-edit{
+    max-height: 100%;
     height: 100%;
-    overflow-y: auto;
     display: grid;
-    grid-template-rows: 48px 1fr 52px;
+    grid-template-rows: 1fr 52px;
     row-gap: 24px;
+    position: relative;
+    overflow: hidden;
 }
 .news-edit_body{
-    border-radius: 6px;
+    margin-top: calc(48px + 24px);
+    height: calc(100% - 48px - 24px);
     background-color: #DEE2E6;
+    overflow-y: auto;
     padding: 16px;
+    display: grid;
+    row-gap: 28px;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, min-content);
 }
 .news-edit_body-text, .news-edit_body-media{
     display: grid;

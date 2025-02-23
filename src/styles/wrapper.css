@@ -18,9 +18,8 @@
     place-items: center;
 }
 .wrapper_left-body{
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: repeat(6, min-content);
+    display: flex;
+    flex-direction: column;
     row-gap: 12px;
 }
 .wrapper_left-navigation{

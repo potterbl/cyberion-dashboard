@@ -7,6 +7,7 @@ import {useDispatch} from "react-redux";
 import {setUser} from "../store/slices/user.slice";
 import ErrorModal from "../components/errorModal";
 import {useNavigate} from "react-router-dom";
+import api from "../api";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Login = () => {
     const [error, setError] = useState("");
 
     const login = async () => {
-        await axios.post("https://api.cyberion.com.ua/users/login",
+        await api.post("/users/login",
             {mail: email, password}
         )
             .then(res => {
