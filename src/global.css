@@ -54,3 +54,6 @@ button{
     height: 100%;
     overflow: hidden;
 }
+.react-datepicker{
+    margin-left: 240px;
+}
