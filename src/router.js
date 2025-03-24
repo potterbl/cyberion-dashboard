@@ -20,6 +20,8 @@ import DivisionCreate from "./pages/divisionCreate";
 import SeasonsEdit from "./pages/seasonsEdit";
 import TournamentsEdit from "./pages/tournamentsEdit";
 import DivisionsEdit from "./pages/divisionEdit";
+import Bans from "./pages/bans";
+import BansCreate from "./pages/bansCreate";
 
 export const router = createBrowserRouter([
     {
@@ -102,6 +104,14 @@ export const router = createBrowserRouter([
                     {
                         path: "/divisions/edit/:id",
                         element: <DivisionsEdit/>
+                    },
+                    {
+                        path: "/bans",
+                        element: <Bans/>
+                    },
+                    {
+                        path: "/bans/create",
+                        element: <BansCreate/>
                     },
 
                 ]

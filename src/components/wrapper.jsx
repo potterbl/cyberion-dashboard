@@ -50,6 +50,10 @@ const Wrapper = () => {
                                 name: "Дівізіони",
                             },
                             {
+                                location: "/bans",
+                                name: "Заблоковані користувачі",
+                            },
+                            {
                                 location: "/settings",
                                 name: "Налаштування профілю",
                             },
