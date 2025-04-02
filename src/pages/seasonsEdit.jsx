@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import "../styles/usersCreate.css";
 import EditHead from "../components/editHead";
 import {useNavigate, useParams} from "react-router-dom";
