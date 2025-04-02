@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import "../styles/usersCreate.css";
 import EditHead from "../components/editHead";
 import {useNavigate} from "react-router-dom";
