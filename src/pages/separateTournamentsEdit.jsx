@@ -44,27 +44,27 @@ const SeparateTournamentsEdit = () => {
         }, 10000);
     }
 
-    const fetchTournament = async () => {
-        await api.get(`/tournaments/separate-tournament/${id}`)
-            .then(res => {
-                setTitle(res.data.title)
-                setImage(res.data.image)
-                setDate(res.data.date)
-                setGame(res.data.game)
-                setUrl(res.data.url)
-                setPrizePull(res.data.prizePull)
-                setTeamSize(res.data.teamSize)
-                setEntry(res.data.entry)
-                setFormat(res.data.format)
-                setPrizesFrom(res.data.prizesFrom)
-                setCustomReglament(res.data.customReglament)
-            })
-    }
-
     useEffect(() => {
         if (title !== "") return
+        const fetchTournament = async () => {
+            await api.get(`/tournaments/separate-tournament/${id}`)
+                .then(res => {
+                    setTitle(res.data.title)
+                    setImage(res.data.image)
+                    setDate(res.data.date)
+                    setGame(res.data.game)
+                    setUrl(res.data.url)
+                    setPrizePull(res.data.prizePull)
+                    setTeamSize(res.data.teamSize)
+                    setEntry(res.data.entry)
+                    setFormat(res.data.format)
+                    setPrizesFrom(res.data.prizesFrom)
+                    setCustomReglament(res.data.customReglament)
+                })
+        }
+
         fetchTournament()
-    }, [title]);
+    }, [title, id]);
 
     const handleSave = async () => {
         const formData = new FormData();
