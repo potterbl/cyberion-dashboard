@@ -22,6 +22,7 @@ import TournamentsEdit from "./pages/tournamentsEdit";
 import DivisionsEdit from "./pages/divisionEdit";
 import Bans from "./pages/bans";
 import BansCreate from "./pages/bansCreate";
+import SeparateTournamentsEdit from "./pages/separateTournamentsEdit";
 
 export const router = createBrowserRouter([
     {
@@ -113,7 +114,10 @@ export const router = createBrowserRouter([
                         path: "/bans/create",
                         element: <BansCreate/>
                     },
-
+                    {
+                        path: "/separate-tournaments/edit/:id",
+                        element: <SeparateTournamentsEdit/>
+                    },
                 ]
             },
             {

@@ -16,7 +16,8 @@ const SeparateTournaments = () => {
                 "Назва": item.title || "",
                 "Дата": item.date || "",
                 "Гра": item.game || "",
-                "Посилання": item.url || ""
+                "Посилання": item.url || "",
+                id: item.id,
             }));
 
             setTournaments(formattedTournaments);
