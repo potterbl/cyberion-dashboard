@@ -24,6 +24,8 @@ const TournamentsEdit = () => {
     ]
 
     const [title, setTitle] = React.useState("");
+    const [minSize, setMinSize] = React.useState("");
+    const [maxSize, setMaxSize] = React.useState("");
     const [image, setImage] = React.useState();
     const [date, setDate] = React.useState(new Date());
     const [game, setGame] = React.useState("");
@@ -42,6 +44,8 @@ const TournamentsEdit = () => {
             .get(`tournaments/tournament/${id}`)
             .then((res) => {
                 setTitle(res.data.title);
+                setMinSize(res.data.playersCountMin);
+                setMaxSize(res.data.playersCountMax);
                 setImage(res.data.image)
                 setDate(new Date(res.data.date))
                 setGame(res.data.game)
@@ -127,6 +131,8 @@ const TournamentsEdit = () => {
         formData.append("title", title);
         formData.append("image", image);
         formData.append("date", date);
+        formData.append("playersCountMin", minSize);
+        formData.append("playersCountMax", maxSize);
         formData.append("game", game);
         prizePull.forEach((prize, index) => {
             formData.append(`prizePull[${index}]`, prize);
@@ -235,6 +241,16 @@ const TournamentsEdit = () => {
                                             showToggle &&
                                             <ToggleSlider active={isTeam} onToggle={setIsTeam}/>
                                         }
+                                    </div>
+                                    <div className="users-create_body-label">
+                                        <p>Мінімальна кількість гравців турніру(опціонально)</p>
+                                        <input value={minSize} onChange={(e) => setMinSize(e.target.value)} type="text"
+                                               className="users-create_body-label_input"/>
+                                    </div>
+                                    <div className="users-create_body-label">
+                                        <p>Максимальна кількість гравців турніру(опціонально)</p>
+                                        <input value={maxSize} onChange={(e) => setMaxSize(e.target.value)} type="text"
+                                               className="users-create_body-label_input"/>
                                     </div>
                                 </>
                             )
