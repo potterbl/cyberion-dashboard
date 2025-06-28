@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import "../styles/usersCreate.css";
 import EditHead from "../components/editHead";
 import {useNavigate} from "react-router-dom";
@@ -10,6 +10,7 @@ import {useToggleSlider} from "react-toggle-slider";
 
 const TournamentsCreate = () => {
     const inputRefs = useRef({});
+    const multiselectRef = useRef(null);
     const navigate = useNavigate();
 
     const [activePage, setActivePage] = React.useState(0);
@@ -34,11 +35,42 @@ const TournamentsCreate = () => {
     const [prize, setPrize] = React.useState("");
     const [isTeam, setIsTeam] = React.useState(false);
     const [customReglament, setCustomReglament] = React.useState([{ title: "", values: [""] }]);
+    const [allowedClubs, setAllowedClubs] = React.useState([]);
+    const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+
+    const [clubs, setClubs] = React.useState([]);
 
     const [toggleSlider] = useToggleSlider({onToggle: setIsTeam});
 
     const [error, setError] = useState("");
     const [showError, setShowError] = useState(false);
+
+    const fetchClubs = async () => {
+        try {
+            const response = await api.get('clubs');
+            setClubs(response.data);
+        } catch (error) {
+            console.error('Error fetching clubs:', error);
+        }
+    };
+
+    useEffect(() => {
+        fetchClubs();
+    }, []);
+
+    // Handle clicks outside multiselect
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (multiselectRef.current && !multiselectRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const setErrorState = (message) => {
         setError(message)
@@ -47,6 +79,33 @@ const TournamentsCreate = () => {
             setShowError(false);
         }, 10000);
     }
+
+    const handleClubToggle = (clubId) => {
+        setAllowedClubs(prev => {
+            if (prev.includes(clubId)) {
+                return prev.filter(id => id !== clubId);
+            } else {
+                return [...prev, clubId];
+            }
+        });
+    };
+
+    const getSelectedClubsText = () => {
+        if (allowedClubs.length === 0) {
+            return "Оберіть клуби";
+        }
+        const selectedClubs = clubs.filter(club => allowedClubs.includes(club.id));
+
+        if (selectedClubs.length === 1) {
+            return selectedClubs[0].title;
+        } else if (selectedClubs.length === 2) {
+            return selectedClubs.map(club => club.title).join(", ");
+        } else if (selectedClubs.length > 2) {
+            return `${selectedClubs.slice(0, 2).map(club => club.title).join(", ")} та ще ${selectedClubs.length - 2}`;
+        }
+
+        return selectedClubs.map(club => club.title).join(", ");
+    };
 
     const handleSave = async () => {
         if(title === "" || typeof title !== "string") {
@@ -102,6 +161,7 @@ const TournamentsCreate = () => {
         formData.append("prizesFrom", prizesFrom);
         formData.append("isTeam", isTeam);
         formData.append("customReglament", JSON.stringify(customReglament));
+        formData.append("allowedClubs", JSON.stringify(allowedClubs));
         await api
             .post("/tournaments/tournament", formData, {
                 headers: {
@@ -280,6 +340,29 @@ const TournamentsCreate = () => {
                                                 <p>Від якого бренду призи</p>
                                                 <input value={prizesFrom} onChange={(e) => setPrizesFrom(e.target.value)} type="text"
                                                        className="users-create_body-label_input"/>
+                                            </div>
+                                            <div className="users-create_body-label">
+                                                <p>Дозволені клуби (опціонально)</p>
+                                                <div className="multiselect-container" ref={multiselectRef}>
+                                                    <div className="multiselect-display" onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                                                        <span>{getSelectedClubsText()}</span>
+                                                        <span className="multiselect-arrow">{isDropdownOpen ? '▲' : '▼'}</span>
+                                                    </div>
+                                                    <div className="multiselect-dropdown" style={{display: isDropdownOpen ? 'block' : 'none'}}>
+                                                        {clubs.map(club => (
+                                                            <div key={club.id} className="multiselect-option">
+                                                                <label>
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        checked={allowedClubs.includes(club.id)}
+                                                                        onChange={() => handleClubToggle(club.id)}
+                                                                    />
+                                                                    <span>{club.title}</span>
+                                                                </label>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </>
                                     ):

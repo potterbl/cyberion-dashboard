@@ -10,6 +10,7 @@ import {ToggleSlider} from "react-toggle-slider";
 
 const TournamentsEdit = () => {
     const inputRefs = useRef({})
+    const multiselectRef = useRef(null);
     const navigate = useNavigate();
     const params = useParams();
 
@@ -38,39 +39,78 @@ const TournamentsEdit = () => {
     const [isTeam, setIsTeam] = React.useState(false);
     const [showToggle, setShowToggle] = React.useState(false);
     const [customReglament, setCustomReglament] = React.useState([{ title: "", values: [""] }]);
+    const [allowedClubs, setAllowedClubs] = React.useState([]);
+    const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+
+    const [clubs, setClubs] = React.useState([]);
+
+    const [isLoading, setIsLoading] = React.useState(true);
+
+    const fetchClubs = async () => {
+        try {
+            const response = await api.get('clubs');
+            setClubs(response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching clubs:', error);
+            return [];
+        }
+    };
 
     const fetchTournament = async () => {
-        await api
-            .get(`tournaments/tournament/${id}`)
-            .then((res) => {
-                setTitle(res.data.title);
-                setMinSize(res.data.playersCountMin);
-                setMaxSize(res.data.playersCountMax);
-                setImage(res.data.image)
-                setDate(new Date(res.data.date))
-                setGame(res.data.game)
-                setPrizePull(res.data.prizePull)
-                setTeamSize(res.data.teamSize)
-                setEntry(res.data.entry)
-                setFormat(res.data.format)
-                setPrizesFrom(res.data.prizesFrom)
-                setPrize(res.data.prize)
-                setIsTeam(res.data.isTeam)
-                setCustomReglament(res.data.customReglament || [{ title: "", values: [""] }])
-            })
-            .catch((err) => console.log(err));
+        try {
+            const res = await api.get(`tournaments/tournament/${id}`);
+            setTitle(res.data.title);
+            setMinSize(res.data.playersCountMin);
+            setMaxSize(res.data.playersCountMax);
+            setImage(res.data.image)
+            setDate(new Date(res.data.date))
+            setGame(res.data.game)
+            setPrizePull(res.data.prizePull)
+            setTeamSize(res.data.teamSize)
+            setEntry(res.data.entry)
+            setFormat(res.data.format)
+            setPrizesFrom(res.data.prizesFrom)
+            setPrize(res.data.prize)
+            setIsTeam(res.data.isTeam)
+            setCustomReglament(res.data.customReglament || [{ title: "", values: [""] }])
+            setAllowedClubs(res.data.allowedClubs?.map(club => Number(club)))
+        } catch (err) {
+            console.log(err);
+        }
     }
+
+    // Загружаем данные последовательно: сначала клубы, потом турнир
+    useEffect(() => {
+        const loadData = async () => {
+            setIsLoading(true);
+            await fetchClubs(); // Сначала загружаем клубы
+            await fetchTournament(); // Потом турнир
+            setIsLoading(false);
+        };
+
+        loadData();
+        // eslint-disable-next-line
+    }, [id])
 
     useEffect(() => {
         if(title === "" && !image) return
         setShowToggle(true)
     }, [image, title]);
 
+    // Handle clicks outside multiselect
     useEffect(() => {
-        if (title) return
-        fetchTournament();
-        // eslint-disable-next-line
-    }, [])
+        const handleClickOutside = (event) => {
+            if (multiselectRef.current && !multiselectRef.current.contains(event.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
 
     const [error, setError] = useState("");
@@ -144,6 +184,7 @@ const TournamentsEdit = () => {
         formData.append("prizesFrom", prizesFrom);
         formData.append("isTeam", isTeam);
         formData.append("customReglament", JSON.stringify(customReglament));
+        formData.append("allowedClubs", JSON.stringify(allowedClubs));
         await api
             .put(`/tournaments/tournament/${id}`, formData, {
                 headers: {
@@ -203,6 +244,41 @@ const TournamentsEdit = () => {
             return updated;
         });
     };
+
+    const handleClubToggle = (clubId) => {
+        setAllowedClubs(prev => {
+            if (prev.includes(clubId)) {
+                return prev.filter(id => id !== clubId);
+            } else {
+                return [...prev, clubId];
+            }
+        });
+    };
+
+    const getSelectedClubsText = () => {
+        if (allowedClubs.length === 0) {
+            return "Оберіть клуби";
+        }
+
+        // Якщо клуби ще не завантажені, показуємо кількість вибраних
+        if (clubs.length === 0) {
+            return `Обрано клубів: ${allowedClubs.length}`;
+        }
+
+        const selectedClubs = clubs.filter(club => allowedClubs.includes(club.id));
+
+        if (selectedClubs.length === 1) {
+            return selectedClubs[0].title;
+        } else if (selectedClubs.length === 2) {
+            return selectedClubs.map(club => club.title).join(", ");
+        } else if (selectedClubs.length > 2) {
+            return `${selectedClubs.slice(0, 2).map(club => club.title).join(", ")} та ще ${selectedClubs.length - 2}`;
+        }
+
+        return selectedClubs.map(club => club.title).join(", ");
+    };
+
+
 
 
     return (
@@ -329,6 +405,39 @@ const TournamentsEdit = () => {
                                             <input value={prizesFrom} onChange={(e) => setPrizesFrom(e.target.value)}
                                                    type="text"
                                                    className="users-create_body-label_input"/>
+                                        </div>
+                                        <div className="users-create_body-label">
+                                            <p>Дозволені клуби (опціонально)</p>
+                                            <div className="multiselect-container" ref={multiselectRef}>
+                                                <div className="multiselect-display" onClick={() => !isLoading && setIsDropdownOpen(!isDropdownOpen)}>
+                                                    <span>{isLoading ? "Завантаження..." : getSelectedClubsText()}</span>
+                                                    <span className="multiselect-arrow">{isDropdownOpen ? '▲' : '▼'}</span>
+                                                </div>
+                                                <div className="multiselect-dropdown" style={{display: isDropdownOpen ? 'block' : 'none'}}>
+                                                    {isLoading ? (
+                                                        <div className="multiselect-option">
+                                                            <span>Завантаження клубів...</span>
+                                                        </div>
+                                                    ) : clubs.length === 0 ? (
+                                                        <div className="multiselect-option">
+                                                            <span>Клуби не знайдено</span>
+                                                        </div>
+                                                    ) : (
+                                                        clubs.map(club => (
+                                                            <div key={club.id} className="multiselect-option">
+                                                                <label>
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        checked={allowedClubs.includes(club.id)}
+                                                                        onChange={() => handleClubToggle(club.id)}
+                                                                    />
+                                                                    <span>{club.title}</span>
+                                                                </label>
+                                                            </div>
+                                                        ))
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
                                     </>
                                 ) : (
