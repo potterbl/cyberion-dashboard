@@ -48,7 +48,7 @@ const TournamentsCreate = () => {
     const fetchClubs = async () => {
         try {
             const response = await api.get('clubs');
-            setClubs(response.data);
+            setClubs(response.data?.filter(c => c.isEnabled)?.sort((a, b) => a.title.charAt(0).localeCompare(b.title.charAt(0), 'ru')));
         } catch (error) {
             console.error('Error fetching clubs:', error);
         }
