@@ -74,7 +74,7 @@ const TournamentsEdit = () => {
             setPrize(res.data.prize)
             setIsTeam(res.data.isTeam)
             setCustomReglament(res.data.customReglament || [{ title: "", values: [""] }])
-            setAllowedClubs(res.data.allowedClubs?.map(club => Number(club)))
+            setAllowedClubs(res.data.allowedClubs?.map(club => Number(club)) || [])
         } catch (err) {
             console.log(err);
         }
@@ -256,16 +256,16 @@ const TournamentsEdit = () => {
     };
 
     const getSelectedClubsText = () => {
-        if (allowedClubs.length === 0) {
+        if (allowedClubs?.length === 0) {
             return "Оберіть клуби";
         }
 
         // Якщо клуби ще не завантажені, показуємо кількість вибраних
         if (clubs.length === 0) {
-            return `Обрано клубів: ${allowedClubs.length}`;
+            return `Обрано клубів: ${allowedClubs?.length}`;
         }
 
-        const selectedClubs = clubs.filter(club => allowedClubs.includes(club.id));
+        const selectedClubs = clubs.filter(club => allowedClubs?.includes(club.id));
 
         if (selectedClubs.length === 1) {
             return selectedClubs[0].title;
