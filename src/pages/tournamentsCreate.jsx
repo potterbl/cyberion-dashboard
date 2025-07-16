@@ -26,6 +26,7 @@ const TournamentsCreate = () => {
     const [maxSize, setMaxSize] = React.useState("");
     const [image, setImage] = React.useState();
     const [date, setDate] = React.useState(new Date());
+    const [registrationDeadline, setRegistrationDeadline] = React.useState(new Date());
     const [game, setGame] = React.useState("");
     const [prizePull, setPrizePull] = React.useState([""]);
     const [teamSize, setTeamSize] = React.useState("");
@@ -150,6 +151,7 @@ const TournamentsCreate = () => {
         formData.append("playersCountMin", minSize);
         formData.append("playersCountMax", maxSize);
         formData.append("date", date);
+        formData.append("registrationDeadline", registrationDeadline);
         formData.append("game", game);
         prizePull.forEach((prize, index) => {
             formData.append(`prizePull[${index}]`, prize);
@@ -248,6 +250,14 @@ const TournamentsCreate = () => {
                                             <p>Дата та час</p>
                                             <DatePicker showTimeSelect={true} selected={date}
                                                         onChange={(date) => setDate(date)}
+                                                        wrapperClassName={"react-datepicker-wrapper_custom"}/>
+                                        </div>
+                                    </div>
+                                    <div className="users-create_body-label">
+                                        <div className="news-edit_body-text_label">
+                                            <p>Дедлайн реєстрації</p>
+                                            <DatePicker showTimeSelect={true} selected={registrationDeadline}
+                                                        onChange={(date) => setRegistrationDeadline(date)}
                                                         wrapperClassName={"react-datepicker-wrapper_custom"}/>
                                         </div>
                                     </div>

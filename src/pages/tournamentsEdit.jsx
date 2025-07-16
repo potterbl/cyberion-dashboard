@@ -29,6 +29,7 @@ const TournamentsEdit = () => {
     const [maxSize, setMaxSize] = React.useState("");
     const [image, setImage] = React.useState();
     const [date, setDate] = React.useState(new Date());
+    const [registrationDeadline, setRegistrationDeadline] = React.useState(new Date());
     const [game, setGame] = React.useState("");
     const [prizePull, setPrizePull] = React.useState([""]);
     const [teamSize, setTeamSize] = React.useState("");
@@ -65,6 +66,7 @@ const TournamentsEdit = () => {
             setMaxSize(res.data.playersCountMax);
             setImage(res.data.image)
             setDate(new Date(res.data.date))
+            setRegistrationDeadline(res.data.registrationDeadline ? new Date(res.data.registrationDeadline) : new Date())
             setGame(res.data.game)
             setPrizePull(res.data.prizePull)
             setTeamSize(res.data.teamSize)
@@ -171,6 +173,7 @@ const TournamentsEdit = () => {
         formData.append("title", title);
         formData.append("image", image);
         formData.append("date", date);
+        formData.append("registrationDeadline", registrationDeadline);
         formData.append("playersCountMin", minSize);
         formData.append("playersCountMax", maxSize);
         formData.append("game", game);
@@ -303,11 +306,18 @@ const TournamentsEdit = () => {
                                                className="users-create_body-label_input"/>
                                     </div>
                                     <div className="users-create_body-label">
-
                                         <div className="news-edit_body-text_label">
                                             <p>Дата та час</p>
                                             <DatePicker showTimeSelect={true} selected={date}
                                                         onChange={(date) => setDate(date)}
+                                                        wrapperClassName={"react-datepicker-wrapper_custom"}/>
+                                        </div>
+                                    </div>
+                                    <div className="users-create_body-label">
+                                        <div className="news-edit_body-text_label">
+                                            <p>Дедлайн реєстрації</p>
+                                            <DatePicker showTimeSelect={true} selected={registrationDeadline}
+                                                        onChange={(date) => setRegistrationDeadline(date)}
                                                         wrapperClassName={"react-datepicker-wrapper_custom"}/>
                                         </div>
                                     </div>

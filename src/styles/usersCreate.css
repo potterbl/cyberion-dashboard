@@ -16,7 +16,7 @@
     display: grid;
     row-gap: 28px;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(5, min-content);
+    grid-template-rows: repeat(6, min-content);
 }
 .users-create_footer{
     justify-self: flex-end;
