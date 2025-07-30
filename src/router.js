@@ -7,6 +7,9 @@ import AuthWrapper from "./components/authWrapper";
 import Login from "./pages/login";
 import NewsEdit from "./pages/newsEdit";
 import NewsCreate from "./pages/newsCreate";
+import Blog from "./pages/blog";
+import BlogEdit from "./pages/blogEdit";
+import BlogCreate from "./pages/blogCreate";
 import Users from "./pages/users";
 import UsersCreate from "./pages/usersCreate";
 import Seasons from "./pages/seasons";
@@ -43,6 +46,10 @@ export const router = createBrowserRouter([
                         element: <News/>
                     },
                     {
+                        path: "blog",
+                        element: <Blog/>
+                    },
+                    {
                         path: "users",
                         element: <Users/>
                     },
@@ -73,6 +80,14 @@ export const router = createBrowserRouter([
                     {
                         path: "/news/create",
                         element: <NewsCreate/>
+                    },
+                    {
+                        path: "/blog/edit/:id",
+                        element: <BlogEdit/>
+                    },
+                    {
+                        path: "/blog/create",
+                        element: <BlogCreate/>
                     },
                     {
                         path: "/users/create",

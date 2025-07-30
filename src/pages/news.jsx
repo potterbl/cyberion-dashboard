@@ -10,7 +10,7 @@ const News = () => {
         try {
             const res = await axios.get("https://api.cyberion.com.ua/news");
 
-            const formattedNews = res.data.map(item => ({
+            const formattedNews = res.data.result.map(item => ({
                 "Назва": item.title || "",
                 "Текст": item.text || "",
                 "Посилання на відео ютуб": item.youtubeLink || "",

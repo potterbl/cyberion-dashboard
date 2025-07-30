@@ -26,6 +26,10 @@ const Wrapper = () => {
                                 name: "Новини",
                             },
                             {
+                                location: "/blog",
+                                name: "Блог",
+                            },
+                            {
                                 location: "/users",
                                 name: "Користувачі",
                             },
@@ -58,7 +62,7 @@ const Wrapper = () => {
                                 name: "Налаштування профілю",
                             },
                         ].map((nav, index) => (
-                            <Link to={nav.location} className={`wrapper_left-navigation ${location.pathname === nav.location || (location.pathname.includes(nav.location) && nav.location !== "/") ? 'wrapper_left-navigation_active' : ''} white`}>
+                            <Link key={index} to={nav.location} className={`wrapper_left-navigation ${location.pathname === nav.location || (location.pathname.includes(nav.location) && nav.location !== "/") ? 'wrapper_left-navigation_active' : ''} white`}>
                                 {nav.name}
                             </Link>
                         ))
