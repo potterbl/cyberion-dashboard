@@ -42,6 +42,7 @@ const TournamentsEdit = () => {
     const [customReglament, setCustomReglament] = React.useState([{ title: "", values: [""] }]);
     const [allowedClubs, setAllowedClubs] = React.useState([]);
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+    const [levelInNumbers, setLevelInNumbers] = React.useState(false);
 
     const [clubs, setClubs] = React.useState([]);
 
@@ -77,6 +78,7 @@ const TournamentsEdit = () => {
             setIsTeam(res.data.isTeam)
             setCustomReglament(res.data.customReglament || [{ title: "", values: [""] }])
             setAllowedClubs(res.data.allowedClubs?.map(club => Number(club)) || [])
+            setLevelInNumbers(res.data.levelInNumbers || false);
         } catch (err) {
             console.log(err);
         }
@@ -188,6 +190,7 @@ const TournamentsEdit = () => {
         formData.append("isTeam", isTeam);
         formData.append("customReglament", JSON.stringify(customReglament));
         formData.append("allowedClubs", JSON.stringify(allowedClubs));
+        formData.append("levelInNumbers", JSON.stringify(levelInNumbers));
         await api
             .put(`/tournaments/tournament/${id}`, formData, {
                 headers: {
@@ -326,6 +329,13 @@ const TournamentsEdit = () => {
                                         {
                                             showToggle &&
                                             <ToggleSlider active={isTeam} onToggle={setIsTeam}/>
+                                        }
+                                    </div>
+                                    <div className="users-create_body-label">
+                                        <p>Рівень гри у числовому форматі</p>
+                                        {
+                                            showToggle &&
+                                            <ToggleSlider active={levelInNumbers} onToggle={setLevelInNumbers}/>
                                         }
                                     </div>
                                     <div className="users-create_body-label">

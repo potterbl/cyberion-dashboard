@@ -38,10 +38,12 @@ const TournamentsCreate = () => {
     const [customReglament, setCustomReglament] = React.useState([{ title: "", values: [""] }]);
     const [allowedClubs, setAllowedClubs] = React.useState([]);
     const [isDropdownOpen, setIsDropdownOpen] = React.useState(false);
+    const [levelInNumbers, setLevelInNumbers] = React.useState(false);
 
     const [clubs, setClubs] = React.useState([]);
 
     const [toggleSlider] = useToggleSlider({onToggle: setIsTeam});
+    const [toggleLevelSlider] = useToggleSlider({onToggle: setLevelInNumbers});
 
     const [error, setError] = useState("");
     const [showError, setShowError] = useState(false);
@@ -164,6 +166,7 @@ const TournamentsCreate = () => {
         formData.append("isTeam", isTeam);
         formData.append("customReglament", JSON.stringify(customReglament));
         formData.append("allowedClubs", JSON.stringify(allowedClubs));
+        formData.append("levelInNumbers", JSON.stringify(levelInNumbers));
         await api
             .post("/tournaments/tournament", formData, {
                 headers: {
@@ -264,6 +267,10 @@ const TournamentsCreate = () => {
                                     <div className="users-create_body-label">
                                         <p>Командний турнір</p>
                                         {toggleSlider}
+                                    </div>
+                                    <div className="users-create_body-label">
+                                        <p>Рівень гри у числовому форматі</p>
+                                        {toggleLevelSlider}
                                     </div>
                                     <div className="users-create_body-label">
                                         <p>Мінімальна кількість гравців турніру(опціонально)</p>
